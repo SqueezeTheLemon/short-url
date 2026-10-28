@@ -1,0 +1,18 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+shared = { path = "../shared" }
+axum = "0.8"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+# query! 매크로는 쓰지 않아요 (ADR-0003). migrate! 는 빌드 때 DB가 필요 없어요.
+sqlx = { version = "0.9", default-features = false, features = ["runtime-tokio", "postgres", "macros", "migrate"] }
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.7", features = ["fs"] }
+dotenvy = "0.15"
+
+[dev-dependencies]
+http-body-util = "0.1"
+serde_json = "1"

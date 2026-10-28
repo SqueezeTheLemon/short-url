@@ -1,0 +1,9 @@
+[application]
+name = "frontend"
+
+[web.app]
+title = "숫자형 단축 URL"
+
+# `dx serve`로 화면만 띄울 때 `/api/*` 요청을 로컬 백엔드로 넘겨요.
+[[web.proxy]]
+backend = "http://localhost:3000/api/"

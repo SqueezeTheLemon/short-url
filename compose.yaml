@@ -1,0 +1,15 @@
+# 로컬 개발용 Postgres. Homebrew Postgres가 5432를 쓰고 있어서 5433으로 열어요.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: short_url
+    ports:
+      - "5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

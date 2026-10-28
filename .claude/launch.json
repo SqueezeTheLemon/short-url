@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "backend-with-ui",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": [
+        "-c",
+        ". \"$HOME/.cargo/env\" && STATIC_DIR=target/dx/frontend/release/web/public cargo run -p backend"
+      ],
+      "port": 3000
+    }
+  ]
+}

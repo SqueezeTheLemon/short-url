@@ -1,0 +1,11 @@
+[package]
+name = "frontend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+shared = { path = "../shared" }
+dioxus = { version = "0.7", features = ["web"] }
+# 상대경로(`/api/links`)로 fetch 할 수 있어서 gloo-net을 써요.
+gloo-net = { version = "0.7", default-features = false, features = ["http", "json"] }
+web-sys = { version = "0.3", features = ["Window", "Location"] }

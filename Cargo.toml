@@ -1,0 +1,5 @@
+[workspace]
+resolver = "3"
+members = ["backend", "frontend", "shared"]
+# 프론트엔드는 wasm 전용이라 `cargo test`/`cargo build` 기본 대상에서 빼요. (빌드는 dx로)
+default-members = ["backend", "shared"]
