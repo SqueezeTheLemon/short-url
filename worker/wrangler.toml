@@ -1,0 +1,16 @@
+name = "short-url"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[assets]
+# 로컬에서 `dx build -p frontend --platform web --release`로 만든 산출물이에요 (ADR-0004).
+directory = "../target/dx/frontend/release/web/public"
+binding = "ASSETS"
+# Dioxus 화면의 모든 경로에 index.html을 줘요.
+not_found_handling = "single-page-application"
+# SPA fallback보다 Worker가 먼저 실행돼야 `/123`을 프록시할 수 있어요.
+run_worker_first = true
+
+[vars]
+# 비밀값이 아니라 공개된 백엔드 주소예요. 브라우저 번들에는 들어가지 않아요.
+BACKEND_ORIGIN = "https://short-url-hk8g.onrender.com"

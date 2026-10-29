@@ -6,9 +6,9 @@
 
 **Status:** ready-for-agent
 
-- [ ] Cloudflare Workers + Static Assets 프로젝트가 있고, 로컬 `dx` 빌드 산출물과 Worker를 `wrangler deploy`로 배포할 수 있다
-- [ ] 숫자로만 된 경로와 `/api/*`는 SPA fallback보다 먼저 Worker가 처리해 Render로 프록시한다
-- [ ] 백엔드의 `302` 응답과 `Location` 헤더가 브라우저까지 그대로 전달된다
-- [ ] 백엔드 주소는 Worker 환경변수로 설정되고, 브라우저 번들에는 어떤 비밀값도 없다
-- [ ] Render의 `PUBLIC_ORIGIN`이 Cloudflare 공개 주소로 설정되어 있다
-- [ ] 공개 주소가 HTTPS로 열리고, 시크릿 창에서 생성 → 다른 브라우저에서 이동이 확인된다
+- [x] Cloudflare Workers + Static Assets 프로젝트가 있고, 로컬 `dx` 빌드 산출물과 Worker를 `wrangler deploy`로 배포할 수 있다
+- [x] 숫자로만 된 경로와 `/api/*`는 SPA fallback보다 먼저 Worker가 처리해 Render로 프록시한다
+- [x] 백엔드의 `302` 응답과 `Location` 헤더가 브라우저까지 그대로 전달된다
+- [x] 백엔드 주소는 Worker 환경변수로 설정되고, 브라우저 번들에는 어떤 비밀값도 없다
+- [x] Render의 `PUBLIC_ORIGIN`이 Cloudflare 공개 주소로 설정되어 있다
+- [x] 공개 주소가 HTTPS로 열리고, 시크릿 창에서 생성 → 다른 브라우저에서 이동이 확인된다
