@@ -13,3 +13,9 @@ pub struct CreateLinkRequest {
 pub struct CreateLinkResponse {
     pub number: i64,
 }
+
+/// `POST /api/links` 검증 실패 응답 (400). 화면에 그대로 보여줄 한국어 메시지예요.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ErrorResponse {
+    pub error: String,
+}
