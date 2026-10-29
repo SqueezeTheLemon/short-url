@@ -1,0 +1,18 @@
+# Render Blueprint: Render가 이 파일을 읽어서 백엔드 서비스를 만들고, push마다 다시 배포해요.
+services:
+  - type: web
+    name: short-url-backend
+    runtime: docker
+    plan: free
+    # Neon DB와 같은 지역에 둬야 왕복 지연이 짧아요.
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    autoDeployTrigger: commit
+    # 새 버전이 이 경로에서 200을 줄 때만 트래픽을 넘겨요.
+    healthCheckPath: /health
+    envVars:
+      # sync: false → 값은 저장소에 없고, Render 대시보드에서 처음 만들 때 직접 입력해요.
+      - key: DATABASE_URL
+        sync: false
+      - key: PUBLIC_ORIGIN
+        sync: false

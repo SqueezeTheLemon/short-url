@@ -47,7 +47,7 @@ Status: ready-for-agent
 
 **구조 (ADR-0001)**
 - Cargo workspace에 세 crate: Dioxus web 프론트엔드, Axum 백엔드, 둘이 공유하는 API 타입 crate. 별도로 Cloudflare Worker(JS)와 wrangler 설정.
-- 공개 접점은 Cloudflare Worker 하나. Worker는 정적 자산(Dioxus web 빌드 산출물)을 서빙하고, `/api/*`와 `^/[0-9]+$` 경로는 Railway 백엔드로 프록시한다. 프록시 경로가 SPA fallback보다 먼저 처리되어야 하며, 백엔드의 3xx는 따라가지 않고 그대로 브라우저에 전달한다. 백엔드 주소는 Worker 환경변수로 둔다.
+- 공개 접점은 Cloudflare Worker 하나. Worker는 정적 자산(Dioxus web 빌드 산출물)을 서빙하고, `/api/*`와 `^/[0-9]+$` 경로는 Render 백엔드로 프록시한다. 프록시 경로가 SPA fallback보다 먼저 처리되어야 하며, 백엔드의 3xx는 따라가지 않고 그대로 브라우저에 전달한다. 백엔드 주소는 Worker 환경변수로 둔다.
 - 프론트엔드는 API를 상대경로로만 호출한다. CORS 설정 없음.
 
 **번호와 저장 (ADR-0002, ADR-0003, ADR-0005)**
@@ -70,11 +70,11 @@ Status: ready-for-agent
 - 원본 URL의 origin이 공개 도메인(`PUBLIC_ORIGIN` 환경변수)과 같으면 거부한다.
 
 **설정과 비밀값**
-- 백엔드: `DATABASE_URL`, `PORT`(Railway 주입, `0.0.0.0` 바인딩), `PUBLIC_ORIGIN`. 모두 환경변수이며 저장소에는 예시 파일만 둔다.
+- 백엔드: `DATABASE_URL`, `PORT`(Render 주입, `0.0.0.0` 바인딩), `PUBLIC_ORIGIN`. 모두 환경변수이며 저장소에는 예시 파일만 둔다.
 - Worker: 백엔드 origin 환경변수. 브라우저 번들에는 어떤 비밀값도 포함하지 않는다.
 
-**배포 (ADR-0004)**
-- 백엔드: Railway가 GitHub 저장소의 multi-stage Dockerfile로 push마다 빌드·배포. Railway Postgres 사용. 헬스체크 경로 `/health`.
+**배포 (ADR-0004, ADR-0006)**
+- 백엔드: Render가 GitHub 저장소의 multi-stage Dockerfile로 push마다 빌드·배포(`render.yaml`). DB는 Neon 무료 Postgres(TLS, direct 연결). 헬스체크 경로 `/health`.
 - 프론트엔드: 로컬에서 `dx`로 빌드한 산출물과 Worker를 `wrangler deploy`로 Cloudflare Workers(Static Assets)에 배포.
 
 **화면**
@@ -82,7 +82,7 @@ Status: ready-for-agent
 - 숫자가 아닌 미지의 경로는 Dioxus 라우터의 "페이지 없음" 화면.
 
 **로컬 개발**
-- Postgres는 Docker 컨테이너로, Railway와 같은 메이저 버전.
+- Postgres는 Docker 컨테이너로, Neon과 같은 메이저 버전(17).
 
 ## Testing Decisions
 

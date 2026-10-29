@@ -2,7 +2,7 @@ use sqlx::PgPool;
 
 #[tokio::main]
 async fn main() {
-    // 로컬에선 .env 를 읽고, 배포 환경(Railway)에선 진짜 환경변수를 그대로 써요.
+    // 로컬에선 .env 를 읽고, 배포 환경(Render)에선 진짜 환경변수를 그대로 써요.
     dotenvy::dotenv().ok();
 
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL 환경변수가 필요해요");

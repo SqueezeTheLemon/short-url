@@ -7,7 +7,7 @@
 **Status:** ready-for-agent
 
 - [x] Cargo workspace에 프론트엔드, 백엔드, 공유 타입 crate가 있고 전체가 빌드된다
-- [x] Docker로 로컬 Postgres를 띄우는 방법이 정해져 있다 (Railway와 같은 메이저 버전)
+- [x] Docker로 로컬 Postgres를 띄우는 방법이 정해져 있다 (배포 DB와 같은 메이저 버전)
 - [x] 백엔드가 시작될 때 마이그레이션이 자동 실행되어, 번호(`GENERATED ALWAYS AS IDENTITY` 기본키, 1부터)와 원본 URL을 가진 링크 테이블이 생긴다
 - [x] `POST /api/links`에 `{ "url": ... }`를 보내면 `201 { "number": ... }`를 응답한다
 - [x] `GET /{번호}`가 `302`와 `Location: <원본 URL>`을 응답한다

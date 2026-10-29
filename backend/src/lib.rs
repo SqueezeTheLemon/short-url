@@ -5,7 +5,7 @@ use axum::{
     extract::{Request, State},
     http::{HeaderValue, StatusCode, header},
     response::{IntoResponse, Response},
-    routing::post,
+    routing::{get, post},
 };
 use shared::{CreateLinkRequest, CreateLinkResponse};
 use sqlx::PgPool;
@@ -30,11 +30,24 @@ pub fn app(pool: PgPool, static_dir: Option<PathBuf>) -> Router {
         .map(|dir| ServeDir::new(&dir).fallback(ServeFile::new(dir.join("index.html"))));
 
     Router::new()
+        .route("/health", get(health))
         .route("/api/links", post(create_link))
         // `/{번호}`를 라우트로 두면 `/favicon.ico` 같은 경로까지 잡혀요.
         // 그래서 Worker처럼 "숫자로만 된 경로인가?"를 fallback에서 직접 판단해요.
         .fallback(fallback)
         .with_state(AppState { pool, static_files })
+}
+
+/// Render가 새 버전을 띄운 뒤 이 경로가 200을 줄 때만 트래픽을 넘겨요.
+/// 서버만 살아있고 DB에 못 붙는 상태도 "비정상"으로 보이도록 DB까지 확인해요.
+async fn health(State(state): State<AppState>) -> StatusCode {
+    match sqlx::query("SELECT 1").execute(&state.pool).await {
+        Ok(_) => StatusCode::OK,
+        Err(err) => {
+            eprintln!("health check failed: {err}");
+            StatusCode::SERVICE_UNAVAILABLE
+        }
+    }
 }
 
 async fn create_link(
